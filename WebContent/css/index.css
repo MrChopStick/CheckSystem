@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	margin-top:200px;
+}
+#box1{
+	background-color:#FFF;
+	width:380px;
+	height:220px;
+	border: #FFF 3px solid ;
+	border-radius:6px;
+	margin-left:430px;
+	margin-top:200px;
+}
+.textbox{
+	border:1px #0099CC  solid;
+	width:250px;
+	height:35px;
+	color:#000;
+	font-size:24px;
+	font-weight:300;
+}
+.text{
+	font-size:16px;
+	font-weight:600;
+}
+.btn-submit {
+        display: inline-block;
+        width: 80px;
+        border: none 0;
+        padding: 8px 0px;
+        font-size: 16px;
+		font-weight:bold;
+        background-color: #09C;
+        color: white;
+        cursor: pointer;
+        text-align: center;
+    }
+

@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>部门管理导航栏</title>
+<script type=text/javascript>
+<!--
+var LastClickID = "";
+
+//？？？
+function menuFix() {
+ var obj = document.getElementById("nav").getElementsByTagName("li");//获取主菜单对象 
+ for (var i=0; i<obj.length; i++) {
+  /*obj[i].onmouseover=function() {
+   this.className+=(this.className.length>0? " ": "") + "sfhover";
+  }*/
+  obj[i].onMouseDown=function() {
+   this.className+=(this.className.length>0? " ": "") + "sfhover";
+  }
+  obj[i].onMouseUp=function() {
+   this.className+=(this.className.length>0? " ": "") + "sfhover";
+  }
+  /*obj[i].onmouseout=function() {
+   this.className=this.className.replace(new RegExp("( ?|^)sfhover\\b"), "");
+  }*/
+ }
+}
+
+
+function DoMenu(childid)//Menu展开或收起
+{
+ var obj = document.getElementById(childid); 
+ obj.className = (obj.className.toLowerCase() == "expanded"?"collapsed":"expanded");
+ //把字符串类型的className转化为小写的。如果收起就展开，如果展开就收起
+ if((LastClickID!="")&&(childid!=LastClickID)) //点击下一个Menu的时候关闭上一个Menu
+ {
+  document.getElementById(LastClickID).className = "collapsed";
+ }
+ LastClickID = childid;
+}
+
+//
+function GetMenuID()//获取MEnuID
+{
+ var MenuID="";
+ var _paramStr = new String(window.location.href);//返回#Menu=ChildMenu1,2,3
+ var _sharpPos = _paramStr.indexOf("#");//返回“#”在字符串中首次出现的位置
+ 
+ if (_sharpPos >= 0 && _sharpPos < _paramStr.length - 1)
+ //
+ {
+  _paramStr = _paramStr.substring(_sharpPos + 1, _paramStr.length);//返回#后面的内容，即Menu=ChildMenu1,2,3
+ }
+ 
+ else//
+ {
+  _paramStr = "";
+ }
+ 
+ if (_paramStr.length > 0)
+ {
+  var _paramArr = _paramStr.split("&");
+  if (_paramArr.length>0)
+  {
+   var _paramKeyVal = _paramArr[0].split("=");//
+   if (_paramKeyVal.length>0)
+   {
+    MenuID = _paramKeyVal[1];//得到MenuID
+   }
+  }
+ }
+ 
+ if(MenuID!="")
+ {
+  DoMenu(MenuID);//展开或收起Menu
+ }
+}
+GetMenuID(); 
+//*这两个function的顺序要注意一下，不然在Firefox里GetMenuID()不起效果
+menuFix();
+-->
+</script>
+
+
+<style type="text/css">
+<!--
+*{margin:0;padding:0;border:0;}
+body {
+ font-family: arial, 宋体, serif;
+ font-size:12px;
+}
+#nav {
+ width:180px;
+ line-height: 24px; 
+ list-style-type: none;
+ text-align:left;
+    /*定义整个ul菜单的行高和背景色*/
+}
+/*==================一级目录===================*/
+#nav a {
+ width: 160px; 
+ display: block;
+ padding-left:20px;
+ /*Width(一定要)，否则下面的Li会变形*/
+}
+#nav li {
+ background:#CCC; /*一级目录的背景色*/
+ border-bottom:#FFF 1px solid; /*下面的一条白边*/
+ float:left;
+ /*float：left,本不应该设置，但由于在Firefox不能正常显示
+ 继承Nav的width,限制宽度，li自动向下延伸*/
+}
+#nav li a:hover{
+ background:#CC0000; /*一级目录onMouseOver显示的背景色*/
+}
+#nav a:link  {
+ color:#666; text-decoration:none;
+}
+#nav a:visited  {
+ color:#666;text-decoration:none;
+}
+#nav a:hover  {
+ color:#FFF;text-decoration:none;font-weight:bold;
+}
+/*==================二级目录===================*/
+#nav li ul {
+ list-style:none;
+ text-align:left;
+}
+#nav li ul li{ 
+ background: #EBEBEB; /*二级目录的背景色*/
+}
+#nav li ul a{
+         padding-left:10px;
+         width:160px;
+ /* padding-left二级目录中文字向右移动，但Width必须重新设置=(总宽度-padding-left)*/
+}
+/*下面是二级目录的链接样式*/
+#nav li ul a:link  {
+ color:#666; text-decoration:none;
+}
+#nav li ul a:visited  {
+ color:#666;text-decoration:none;
+}
+#nav li ul a:hover {
+ color:#F3F3F3;
+ text-decoration:none;
+ font-weight:normal;
+ background:#CC0000;
+ /* 二级onmouseover的字体颜色、背景色*/
+}
+/*==============================*/
+#nav li:hover ul {
+ left: auto;
+}
+#nav li.sfhover ul {
+ left: auto;
+}
+#content {
+ clear: left; 
+}
+#nav ul.collapsed {
+ display: none;
+}
+-->
+#PARENT{
+ width:180px;
+}
+*#PARENT{
+ width:100%;
+}
+</style>
+</head>
+
+<body>
+<div id="PARENT">
+ <ul id="nav">
+  <li><a href="#Menu=ChildMenu1"  onclick="DoMenu('ChildMenu1')">设备管理</a>
+   <ul id="ChildMenu1" class="collapsed">
+    <li><a href="EquiGroup1.html" target="a2">设备组1</a></li>
+    <li><a href="EquiGroup2.html" target="a2">设备组2</a></li>
+    <li><a href="EquiGroup3.html" target="a2">设备组3</a></li>
+    <li><a href="EquiGroup4.html" target="a2">设备组4</a></li>
+  </ul>
+  </li>
+  <li><a href="#Menu=ChildMenu2" onclick="DoMenu('ChildMenu2')">记录查询</a>
+    <ul id="ChildMenu2" class="collapsed">
+     <li><a href="#">未完成巡检计划</a></li>
+     <li><a href="#">合格设备</a></li>
+     <li><a href="#">不合格设备</a></li>
+     <li><a href="#">设备故障率排名</a></li>
+     <li><a href="#">详细巡检记录</a></li>
+    </ul>
+  </li>
+  <li><a href="#Menu=ChildMenu3" onclick="DoMenu('ChildMenu3')">检查项管理</a>
+    <ul id="ChildMenu3" class="collapsed">
+     <li><a href="CheckTable.html" target="a2">检查项管理</a></li>
+     <li><a href="#">***</a></li>
+     <li><a href="#">***</a></li>
+    </ul>
+  </li>
+ </ul>
+</div>
+</body>
+</html>
+
