@@ -1,0 +1,26 @@
+.header ,.header-left ,.header-right{
+	height:100px; 
+}
+.header{
+}
+.header-left{
+	width:80%;
+	float:left;
+}
+.header-right{
+	width:20%; 
+	float:right;
+	align:center;
+}
+.main-title{
+	font-size:50px;
+	padding-top:10px;	
+}
+.content{
+	height:550px;
+	margin-top:5px;
+}
+.footer{
+	height:60px;
+	border:1px solid;
+}

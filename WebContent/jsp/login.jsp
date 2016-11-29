@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<!-- 引入JQuery -->
   <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui/jquery.min.js"></script>
+  <script type="text/javascript" src="../js/jquery.js"></script>
   <!-- 引入EasyUI -->
   <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui/jquery.easyui.min.js"></script>
   <!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
@@ -14,62 +15,29 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/jquery-easyui/themes/default/easyui.css" type="text/css"/>
   <!-- 引入EasyUI的图标样式文件-->
   <link rel="stylesheet" href="${pageContext.request.contextPath}/jquery-easyui/themes/icon.css" type="text/css"/>
-      <script>
-	function Submit() {
-	 var username=document.getElementById("username").value;//获取用户名
-	 var password=document.getElementById("password").value;//获取密码
-
-	 var bFlag=true;//
-	 
-	 if(username==""&&password==""){
-		 alert("请输入用户名和密码！");
-		 bFlag=false;
-	 }
-	 else if(username==""){
-		 alert("请输入用户名！");
-		 bFlag=false;
-	 }
-	 else if(password==""){
-		 alert("请输入密码！");
-		 bFlag=false;
-	 }
-	 else{
-		 
-	}
-	 /*
-	 else if(username=="root"&&password=="123"){
-		 window.open('EquiManag.html');
-	 }
-	 else if(username=="root"&&password=="456"){
-		 window.open('DeptManag.html');
-	 }
-	 else if(username=="root"&&password=="789"){
-		 window.open('SysManag.html');
-	 }*/
-	 
-	 return bFlag;
- }
-	</script>
+  <link rel="stylesheet" type="text/css" href="../css/login.css">
+  <script type="text/javascript" src="../js/login.js"></script>
 <title>login</title>
 </head>
 <body style="width:100%;height:100%">
-	<h2>巡检系统登录</h2>
-    <form name="Loginform" action="./CheckLogin.jsp" method="POST">
-	<div style="margin:20px 0;"></div>
-	<div class="easyui-panel" title="Register" style="width:400px;padding:30px 60px">
+    <form id="login-form" name="loginform" action="./MainSystem.jsp" method="POST">
+	 <div id="login-form-panel" class="easyui-panel" title="系统登录" style="width:400px;padding:30px 60px">
 		<div style="margin-bottom:20px">
 			<div>用户名:</div>
-			<input class="easyui-textbox" id="username" style="width:100%;height:32px">
+			<input class="easyui-textbox" type="text" id="username" name="username" style="width:100%;height:40px">
 		</div>
 		<div style="margin-bottom:20px"> 
 			<div>密码:</div>
-			<input class="easyui-textbox" id="password" style="width:100%;height:32px">
+			<input class="easyui-textbox" id="password" name="password" type="password" style="width:100%;height:40px">
 		</div>
 		<div>
-			<a href="#" class="easyui-linkbutton" iconCls="icon-ok" style="width:100%;height:32px" onClick="Submit()">登录</a>
+			<a id="login-form-submit" class="easyui-linkbutton"  style="width:100%;height:40px" >登       录</a>
 		</div>
-		<button type="submit">login</button>
-	</div>
+		<input type ="hidden" id="name" name="name">
+		<input type ="hidden" id="phone" name="phone">
+		<input type ="hidden" id="job" name="job">
+		<input type ="hidden" id="power" name="power">
+	 </div>
 	</form>
 </body>
 </html>
