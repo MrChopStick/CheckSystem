@@ -24,6 +24,7 @@ public class Task_detail extends HttpServlet
 	{
 		super();
 	}
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
 	{
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -39,9 +40,6 @@ public class Task_detail extends HttpServlet
 		{
 		case "Get":
 			int cd_plan_id = Integer.parseInt(json.getString("cd_plan_id"));
-			// int cd_eq_id = Integer.parseInt(json.getString("cd_eq_id"));
-			// int cd_check_id =
-			// Integer.parseInt(json.getString("cd_check_id"));
 			String str = "cd_plan_id=" + String.valueOf(cd_plan_id);
 			try
 			{
@@ -53,17 +51,18 @@ public class Task_detail extends HttpServlet
 		}
 	}
 
+	// 按设备打包
 	String display_task_detail(String search) throws SQLException
 	{
 		String result = "Failed";
 		Unit unit = Unit.getUnit();
 		if (DB_act.Check_plan_detail_select(search, unit))
 		{
-			JSONObject resultOfSQL = new JSONObject(); 
-			JSONArray check_list_of_eq = new JSONArray(); 
-			JSONObject seq_of_eq = new JSONObject(); 
+			JSONObject resultOfSQL = new JSONObject(); // 储存当前行的数据
+			JSONArray check_list_of_eq = new JSONArray(); // 某一个设备的检查项数据数组
+			JSONObject seq_of_eq = new JSONObject(); // 打包一个设备的检查项
 
-			JSONObject ToApp = new JSONObject(); 
+			JSONObject ToApp = new JSONObject(); // 打包最终发给App的数据
 			ResultSetMetaData meta = unit.rs.getMetaData();
 			ArrayList<Integer> seq = new ArrayList<Integer>();
 			seq.add(-1);
@@ -71,16 +70,20 @@ public class Task_detail extends HttpServlet
 			while (unit.rs.next())
 			{
 				resultOfSQL = new JSONObject();
+				// 将数据库每一行的每一个属性加入JSON数组
 				for (int i = 2; i < 7; i++)
 				{
 					String colIndex = meta.getColumnName(i);
 					String value = unit.rs.getString(colIndex);
 					resultOfSQL.put(colIndex, value);
 				}
+				// 检查当前检查项的设备ID是否与之前的相同
 				CurrentEqID = resultOfSQL.getString("cd_eq_id");
 				int CurrentSeq = checkExist(CurrentEqID, seq);
 				if (CurrentSeq >= 0)
 				{
+					// seq_of_eq.put("eq"+String.valueOf(seq.size()-1),
+					// check_list_of_eq);
 					seq_of_eq.getJSONArray("eq" + (CurrentSeq)).put(resultOfSQL);
 				} else
 				{
@@ -89,8 +92,10 @@ public class Task_detail extends HttpServlet
 					check_list_of_eq.put(resultOfSQL);
 					seq_of_eq.put("eq" + String.valueOf(seq.size() - 1), check_list_of_eq);
 				}
+				// resultToApp.put(seq_of_eq);
 
 			}
+			// 对整理好的数据按照设备ID进行分类打包
 			ToApp.put("resultList", seq_of_eq);
 			unit.close();
 			return ToApp.toString();

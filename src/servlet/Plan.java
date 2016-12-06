@@ -20,35 +20,24 @@ import org.json.JSONObject;
 import java.util.*;
 import java.text.*;
 
-/**
- * Servlet implementation class Plan
- */
 @WebServlet("/Plan")
-public class Plan extends HttpServlet {
+public class Plan extends HttpServlet
+{
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public Plan() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public Plan()
+	{
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		int plan_id = 0;
@@ -58,35 +47,40 @@ public class Plan extends HttpServlet {
 
 		Time plan_start_time = new Time(0);
 		Time plan_dead_time = new Time(0);
-		
+
 		int inspector_id = 0;
 		int manager_id = 0;
 		int plan_state = 0;
 		String plan_note = new String();
-		//JSONObject json = new JSONObject(DB_act.get_request(request, response));
+		// JSONObject json = new JSONObject(DB_act.get_request(request,
+		// response));
 		JSONObject json = new JSONObject(DB_act.get_request(request, response));
 		String type = request.getParameter("Type");
 		String search = new String();
-		switch(type){
+		switch (type)
+		{
 		case "Get":
-			
+
 			Iterator<String> getKey = json.keys();
 			String key = getKey.next().toString();
-			if(key.equals("plan_ALL") || key.equals("plan_all")){
-				search = "1=1";			
-			}else{
+			if (key.equals("plan_ALL") || key.equals("plan_all"))
+			{
+				search = "1=1";
+			} else
+			{
 				search = key + "=" + json.getString(key);
-			}		
-			try {
+			}
+			try
+			{
 				response.getWriter().append(create_plan_list(search));
-			} catch (SQLException e) {
-				// TODO �Զ����ɵ� catch ��
+			} catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 			break;
-		case "Insert":		
+		case "Insert":
 			JSONArray jsonArray = new JSONArray(DB_act.get_request(request, response));
-			
+
 			JSONObject json2 = jsonArray.getJSONObject(0);
 			plan_name = json2.getString("plan_name");
 			plan_cycle = Integer.parseInt(json2.getString("plan_cycle"));
@@ -97,150 +91,162 @@ public class Plan extends HttpServlet {
 			manager_id = Integer.parseInt(json2.getString("manager_id"));
 			plan_note = json2.getString("plan_note");
 			plan_state = Integer.parseInt(json2.getString("plan_state"));
-			//int cd_plan_id
+			// int cd_plan_id
 			int cd_eq_id = 0;
 			int cd_check_id = 0;
-			int cd_plan_id = DB_act.Check_plan_insert(plan_name,plan_cycle,plan_start_date,
-					plan_start_time,plan_dead_time,inspector_id,manager_id,plan_state,
-					plan_note);
+			int cd_plan_id = DB_act.Check_plan_insert(plan_name, plan_cycle, plan_start_date, plan_start_time,
+					plan_dead_time, inspector_id, manager_id, plan_state, plan_note);
 			int falseTime = 0;
-			for(int i = 1; i<jsonArray.length(); i++){
+			for (int i = 1; i < jsonArray.length(); i++)
+			{
 				json2 = jsonArray.getJSONObject(i);
 				cd_eq_id = Integer.parseInt(json2.getString("cd_eq_id"));
 				cd_check_id = Integer.parseInt(json2.getString("cd_check_id"));
-				if(Task_detail.insert_task_detail(cd_plan_id, cd_eq_id, cd_check_id)){
+				if (Task_detail.insert_task_detail(cd_plan_id, cd_eq_id, cd_check_id))
+				{
 					;
-				}else{
+				} else
+				{
 					falseTime++;
 					break;
 				}
 			}
-			if(falseTime>0){
+			if (falseTime > 0)
+			{
 				response.getWriter().append("Failed");
 				falseTime = 0;
-			}else{
+			} else
+			{
 				response.getWriter().append("OK");
 			}
-			
+
 			System.out.println(cd_plan_id);
 			/*
-			for(int i = 0;i<jsonArray.length();i++){
-				json = jsonArray.getJSONObject(i);
-				cd_eq_id = Integer.parseInt(json.getString("cd_eq_id"));	
-				cd_check_id = Integer.parseInt(json.getString("cd_check_id"));
-				response.getWriter().append(insert_plan_detail(cd_eq_id,cd_check_id,cd_plan_id));
-			}
-			*/
+			 * for(int i = 0;i<jsonArray.length();i++){ json =
+			 * jsonArray.getJSONObject(i); cd_eq_id =
+			 * Integer.parseInt(json.getString("cd_eq_id")); cd_check_id =
+			 * Integer.parseInt(json.getString("cd_check_id"));
+			 * response.getWriter().append(insert_plan_detail(cd_eq_id,
+			 * cd_check_id,cd_plan_id)); }
+			 */
 			break;
 		case "Delete":
 			JSONObject json3 = new JSONObject(DB_act.get_request(request, response));
 			plan_id = Integer.parseInt(json3.getString("plan_id"));
-			try {
+			try
+			{
 				response.getWriter().append(delete_plan(plan_id));
-			} catch (SQLException e) {
-				// TODO �Զ����ɵ� catch ��
+			} catch (SQLException e)
+			{
 				e.printStackTrace();
 			}
 			break;
 		case "Update":
 			JSONObject json4 = new JSONObject(DB_act.get_request(request, response));
 			plan_id = Integer.parseInt(json4.getString("plan_id"));
-			response.getWriter().append(update_plan(plan_name,plan_cycle,plan_start_date,
-					plan_start_time,plan_dead_time,inspector_id,manager_id,plan_state,
-					plan_note,plan_id));
+			response.getWriter().append(update_plan(plan_name, plan_cycle, plan_start_date, plan_start_time,
+					plan_dead_time, inspector_id, manager_id, plan_state, plan_note, plan_id));
 			break;
-		}				
+		}
 	}
-	
-	String create_plan_list(String search) throws SQLException{
+
+	String create_plan_list(String search) throws SQLException
+	{
 		String result = new String();
 		Unit unit = Unit.getUnit();
-		if(DB_act.Check_plan_select(search, unit)){
+		if (DB_act.Check_plan_select(search, unit))
+		{
 			JSONObject resultOfSQL = new JSONObject();
 			JSONArray resultToApp = new JSONArray();
 			JSONObject ToApp = new JSONObject();
 			ResultSetMetaData meteData = unit.rs.getMetaData();
-			while(unit.rs.next()){
+			while (unit.rs.next())
+			{
 				resultOfSQL = new JSONObject();
-				for(int i = 1; i < 11; i++){
+				for (int i = 1; i < 11; i++)
+				{
 					String columnIndex = meteData.getColumnLabel(i);
-					//String value = new String();
 					String value = unit.rs.getString(columnIndex);
 					/*
-					if(i == 2)
-						value = unit.rs.getString(columnIndex);
-					else 
-						value = String.valueOf(unit.rs.getInt(columnIndex));
-						*/	
+					 * if(i == 2) value = unit.rs.getString(columnIndex); else
+					 * value = String.valueOf(unit.rs.getInt(columnIndex));
+					 */
 					resultOfSQL.put(columnIndex, value);
 				}
-				resultToApp.put(resultOfSQL);			
+				resultToApp.put(resultOfSQL);
 			}
 			unit.close();
-			//System.out.println(resultToApp.toString());
-			
+			// System.out.println(resultToApp.toString());
+
 			ToApp.put("resultList", resultToApp);
-			//System.out.println(ToApp.toString());
+			// System.out.println(ToApp.toString());
 			return ToApp.toString();
-			}else{
-				result = "Failed";	
-				unit.close();
-				return result;
-			}			
-		}	
-	
-	int insert_plan(String name,int cycle,Date start_data,Time start_time,Time dead_time,
-			int inspector,int manager,int state,String note){
-		int cd_plan_id = DB_act.Check_plan_insert
-				(name, cycle, start_data, start_time, dead_time, inspector, manager, state, note);
+		} else
+		{
+			result = "Failed";
+			unit.close();
+			return result;
+		}
+	}
+
+	int insert_plan(String name, int cycle, Date start_data, Time start_time, Time dead_time, int inspector,
+			int manager, int state, String note)
+	{
+		int cd_plan_id = DB_act.Check_plan_insert(name, cycle, start_data, start_time, dead_time, inspector, manager,
+				state, note);
 		/*
-		if(DB_act.Check_plan_insert(name, cycle, start_data, 
-				start_time, dead_time, inspector, manager, state, note)){
-			result = "OK";
-		}else{
-			result = "Failed";
-		}
-		return result;
-		*/
+		 * if(DB_act.Check_plan_insert(name, cycle, start_data, start_time,
+		 * dead_time, inspector, manager, state, note)){ result = "OK"; }else{
+		 * result = "Failed"; } return result;
+		 */
 		return cd_plan_id;
-		
+
 	}
-	
-	String insert_plan_detail(int cd_eq_id, int cd_check_id, int cd_plan_id){
+
+	String insert_plan_detail(int cd_eq_id, int cd_check_id, int cd_plan_id)
+	{
 		String result = new String();
-		if(DB_act.Check_plan_detail_insert(cd_plan_id, cd_eq_id, cd_check_id)){
+		if (DB_act.Check_plan_detail_insert(cd_plan_id, cd_eq_id, cd_check_id))
+		{
 			result = "OK";
-		}else{
+		} else
+		{
 			result = "Failed";
 		}
 		return result;
 	}
-	
-	String delete_plan(int plan_id) throws SQLException{
+
+	String delete_plan(int plan_id) throws SQLException
+	{
 		String result = new String();
-		String str = "plan_id="+String.valueOf(plan_id);
+		String str = "plan_id=" + String.valueOf(plan_id);
 		Unit unit = Unit.getUnit();
-		if(DB_act.Check_plan_select(str, unit)){
+		if (DB_act.Check_plan_select(str, unit))
+		{
 			unit.rs.next();
 			unit.rs.deleteRow();
 			result = "OK";
-		}else{
+		} else
+		{
 			result = "Failed";
 		}
 		return result;
 	}
-	
-	String update_plan(String name,int cycle,Date start_data,Time start_time,Time dead_time,
-			int inspector,int manager,int state,String note,int id){
+
+	String update_plan(String name, int cycle, Date start_data, Time start_time, Time dead_time, int inspector,
+			int manager, int state, String note, int id)
+	{
 		String result = new String();
-		if(DB_act.Check_plan_Update(name, cycle, start_data, 
-				start_time, dead_time, inspector, manager, state, note,id)){
+		if (DB_act.Check_plan_Update(name, cycle, start_data, start_time, dead_time, inspector, manager, state, note,
+				id))
+		{
 			result = "OK";
-		}else{
+		} else
+		{
 			result = "Failed";
 		}
 		return result;
-		
+
 	}
 
 }

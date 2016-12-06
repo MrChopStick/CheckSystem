@@ -62,9 +62,9 @@ public class DB_act
 	}
 
 	// 向Repair表中增加一项,插入不需要返回,报修单编号自动生成，
-	public static boolean Repair_insert(int eqid, String detail, int state)
+	public static boolean Repair_insert(int eqid, String detail, int state, int inspector_id)
 	{
-		String query = new String("Insert into repair_list(repair_eqid,repair_detail,repair_state) values(?,?,?)");
+		String query = new String("Insert into repair_list(repair_eqid,repair_detail,repair_state,repair_inspector_id) values(?,?,?,?)");
 		PreUnit u = PreUnit.getUnit(query);
 		if (u == null)
 			return false;
@@ -73,6 +73,7 @@ public class DB_act
 			u.st.setInt(1, eqid);
 			u.st.setString(2, detail);
 			u.st.setInt(3, state);
+			u.st.setInt(4, inspector_id);
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -80,7 +81,6 @@ public class DB_act
 			}
 		} catch (SQLException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		u.close();

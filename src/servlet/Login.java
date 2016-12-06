@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,17 +36,85 @@ public class Login extends HttpServlet
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
 		System.out.println("login");
-		int staff_id = 0;
+		int staff_id ;
 		String staff_passwd = new String();
-		String DataString = DB_act.get_request(request, response);
-		try
+		//String DataString = DB_act.get_request(request, response);
+		String DataString = request.getParameter("json");
+		String Type = request.getParameter("Type");
+		
+		
+		System.out.println("LoginType="+Type);
+		System.out.println(DataString);
+		if(Type.equals("WebGet"))
+		{
+			String staff_id1 = request.getParameter("username");
+			staff_passwd = request.getParameter("password");
+			String login = "staff_id=" + staff_id1 + " AND " + "staff_passwd=" + staff_passwd;
+			System.out.println("loginquery"+login);
+			String result;
+			Unit unit = Unit.getUnit();
+			if (DB_act.Staff_select(login, unit))
+			{
+				try
+				{
+					unit.rs.last();
+					JSONObject resultOfSQL = new JSONObject();
+					JSONArray resultToApp = new JSONArray();
+					if (unit.rs.getRow() > 0)
+					{
+						ResultSetMetaData metaData = unit.rs.getMetaData();
+						String Staff_id = unit.rs.getString(1);
+						String Staff_name = unit.rs.getString(2);
+						String Staff_job = unit.rs.getString(3);
+						int power = Integer.parseInt(unit.rs.getString(5));
+						System.out.println(Staff_name);
+						HttpSession session=request.getSession(true);
+						session.setAttribute("name", Staff_name);
+						session.setAttribute("job", Staff_job);
+						session.setAttribute("id", Staff_id);
+						switch(power)
+						{
+							case 0:
+								break;
+							case 1:
+								break;
+							case 2:
+								request.getRequestDispatcher("/jsp/equi_manager_list.jsp").forward(request, response);
+								break;
+							case 3:
+								System.out.println("跳转到巡检人界面");
+								
+								//response.sendRedirect("/CheckSystem/jsp/staff_task.jsp");
+								request.getRequestDispatcher("/jsp/staff_task.jsp").forward(request, response);
+								break;
+							case 4:
+								request.getRequestDispatcher("/jsp/user_repair.jsp").forward(request, response);
+								break;
+						}
+						
+						
+					} else
+					{
+						result = "Failed";
+					}
+				} catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+				
+			} else
+			{
+				result = "Failed";
+			}
+		}
+		else try
 		{
 			JSONObject json = new JSONObject(DataString.toString());
 			staff_id = Integer.parseInt(json.getString("staff_id"));
 			staff_passwd = json.getString("staff_passwd");
 			String login = "staff_id=" + String.valueOf(staff_id) + " AND " + "staff_passwd=" + staff_passwd;
 			response.getWriter().append(CheckUser(login));
-			System.out.println("Login");
+			System.out.println("Login  "+login+ "  "+ CheckUser(login));
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -85,4 +154,5 @@ public class Login extends HttpServlet
 		}
 		return result;
 	}
+	
 }

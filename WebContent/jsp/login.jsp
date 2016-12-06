@@ -4,40 +4,71 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<!-- 引入JQuery -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui/jquery.min.js"></script>
-  <script type="text/javascript" src="../js/jquery.js"></script>
-  <!-- 引入EasyUI -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui/jquery.easyui.min.js"></script>
-  <!-- 引入EasyUI的中文国际化js，让EasyUI支持中文 -->
-  <script type="text/javascript" src="${pageContext.request.contextPath}/jquery-easyui/locale/easyui-lang-zh_CN.js"></script>
-  <!-- 引入EasyUI的样式文件-->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/jquery-easyui/themes/default/easyui.css" type="text/css"/>
-  <!-- 引入EasyUI的图标样式文件-->
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/jquery-easyui/themes/icon.css" type="text/css"/>
+  <!-- AdminLTE form -->
+    <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="../AdminLTE/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="../AdminLTE/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. Choose a skin from the css/skins
+       folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="../AdminLTE/dist/css/skins/_all-skins.min.css">
+  
+  	<script src="../js/jquery.js"></script>	
+	<script src="../js/login.js"></script>
+  
+  
   <link rel="stylesheet" type="text/css" href="../css/login.css">
   <script type="text/javascript" src="../js/login.js"></script>
 <title>login</title>
 </head>
 <body style="width:100%;height:100%">
-    <form id="login-form" name="loginform" action="./MainSystem.jsp" method="POST">
-	 <div id="login-form-panel" class="easyui-panel" title="系统登录" style="width:400px;padding:30px 60px">
-		<div style="margin-bottom:20px">
-			<div>用户名:</div>
-			<input class="easyui-textbox" type="text" id="username" name="username" style="width:100%;height:40px">
-		</div>
-		<div style="margin-bottom:20px"> 
-			<div>密码:</div>
-			<input class="easyui-textbox" id="password" name="password" type="password" style="width:100%;height:40px">
-		</div>
-		<div>
-			<a id="login-form-submit" class="easyui-linkbutton"  style="width:100%;height:40px" >登       录</a>
-		</div>
-		<input type ="hidden" id="name" name="name">
-		<input type ="hidden" id="phone" name="phone">
-		<input type ="hidden" id="job" name="job">
-		<input type ="hidden" id="power" name="power">
-	 </div>
-	</form>
+
+	    <div style="width:300px;float:right;margin-right:320px;margin-top:160px">
+          <!-- general form elements -->
+          <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">系统登录</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form" action="/CheckSystem/Login?Type=WebGet" method="POST" id="loginform" >
+              <div class="box-body">
+                <div class="form-group">
+                  <label for="username">用户名</label>
+                  <input type="text" class="form-control" id="username" name="username" placeholder="用户名">
+                </div>
+                <div class="form-group">
+                  <label for="password">密码</label>
+                  <input type="password" class="form-control" id="password" name="password" placeholder="密码">
+                </div>
+              </div>
+              <!-- /.box-body -->
+
+              <div class="box-footer">
+              
+                 <button type="reset"  class="btn btn-default" style="float:right">重置</button>
+                 <input type="button" id="login-form-submit" class="btn btn-primary" value="登录"  style="float:right;margin-right:20px">
+              </div>
+            </form>
+          </div>
+          <!-- /.box -->
+          </div>
+            
+    <!-- jQuery 2.2.3 -->
+	<script src="../AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
+	<!-- Bootstrap 3.3.6 -->
+	<script src="../AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+	<!-- FastClick -->
+	<script src="../AdminLTE/plugins/fastclick/fastclick.js"></script>
+	<!-- AdminLTE App -->
+	<script src="../AdminLTE/dist/js/app.min.js"></script>
+	<!-- AdminLTE for demo purposes -->
+	<script src="../AdminLTE/dist/js/demo.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,320 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>巡检系统-巡检人</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <!-- Bootstrap 3.3.6 -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/bootstrap/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/AdminLTE.min.css">
+  <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+        page. However, you can choose any other skin. Make sure you
+        apply the skin class to the body tag so the changes take effect.
+  -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/skins/skin-blue.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/Datatables-1.10.12/media/css/dataTables.bootstrap.css"/>
+  <link rel="stylesheet"href="${pageContext.request.contextPath}/AdminLTE/plugins/Datatables-1.10.12/extensions/Select/css/select.bootstrap.min.css"/>
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<!--
+BODY TAG OPTIONS:
+=================
+Apply one or more of the following classes to get the
+desired effect
+|---------------------------------------------------------|
+| SKINS         | skin-blue                               |
+|               | skin-black                              |
+|               | skin-purple                             |
+|               | skin-yellow                             |
+|               | skin-red                                |
+|               | skin-green                              |
+|---------------------------------------------------------|
+|LAYOUT OPTIONS | fixed                                   |
+|               | layout-boxed                            |
+|               | layout-top-nav                          |
+|               | sidebar-collapse                        |
+|               | sidebar-mini                            |
+|---------------------------------------------------------|
+-->
+<body class="hold-transition skin-blue">
+<div class="wrapper">
+
+  <!-- Main Header -->
+  <header class="main-header">
+
+    <!-- Logo -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <!--<span class="logo-mini"><b>A</b>LT</span> -->
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>巡检系统</b></span>
+    </a>
+
+    <!-- Header Navbar -->
+    <nav class="navbar navbar-static-top" role="navigation">
+      <!-- Navbar Right Menu -->
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+				<li>
+                <div class="pull-right">
+                  <a href="#" id="signout" class="btn btn-danger btn-lg"><span>退出</span></a>
+                </div>
+				</li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  <!-- Left side column. contains the logo and sidebar -->
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <ul class="sidebar-menu">
+        <li class="header">功能</li>
+        <!-- Optionally, you can add icons to the links -->
+        <li><a href="/CheckSystem/jsp/staff_task.jsp"><i class="fa fa-user"></i> <span>巡检任务</span></a></li>
+        <li><a href="/CheckSystem/jsp/staff_check_log.jsp"><i class="fa fa-archive"></i> <span>巡检记录</span></a></li>
+        <li><a href="/CheckSystem/jsp/staff_repair.jsp"><i class="fa fa-building"></i> <span>设备报修</span></a></li>
+    </section>
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
+    <section class="content">
+        <!-- Your Page Content Here -->
+		<div class="row">
+	        <div class="col-xs-12">
+	          <div class="box">
+	            <div class="box-header ">
+	              <h3 class="box-title">设备组信息</h3>
+	            </div>
+				<div class="btn-group">
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#groupAdd">增加</button>
+					<button type="button" class="btn btn-warning">修改</button>
+					<button type="button" class="btn btn-warning">删除</button>
+				</div>
+				<div class="box-body">
+					<table id="EquipGroup" class="table table-bordered table-hover" data-page-length="10">
+						<thead>
+		                <tr>
+		                  <th>组号</th>
+		                  <th>描述</th>
+		                  <th>管理员ID</th>
+		                  <th>管理员姓名</th>
+		                </tr>
+		                </thead>
+						<tbody>
+		                <tr>
+		                  <td>Trident</td>
+		                  <td>Internet
+		                    Explorer 4.0
+		                  </td>
+		                  <td>Win 95+</td>
+		                  <td>X</td>
+		                </tr>
+						<tr>
+		                  <td>Trident</td>
+		                  <td>Internet
+		                    Explorer 4.0
+		                  </td>
+		                  <td>Win 95+</td>
+		                  <td>X</td>
+		                </tr>
+						<tr>
+		                  <td>Trident</td>
+		                  <td>Internet
+		                    Explorer 4.0
+		                  </td>
+		                  <td>Win 95+</td>
+		                  <td>X</td>
+		                </tr>
+						<tr>
+		                  <td>Trident</td>
+		                  <td>Internet
+		                    Explorer 4.0
+		                  </td>
+		                  <td>Win 95+</td>
+		                  <td>X</td>
+		                </tr>
+						<tr>
+		                  <td>Trident</td>
+		                  <td>Internet
+		                    Explorer 4.0
+		                  </td>
+		                  <td>Win 95+</td>
+		                  <td>X</td>
+		                </tr>
+						</tbody>
+				  </table>
+		     	</div>
+		     </div>
+			</div>
+		</div>
+        <!-- /.content -->
+        <!-- content -->
+        <!-- Your Page Content Here -->
+	    <div class="box">
+	        <div class="box-header ">
+	              <h3 class="box-title" id="equipList">设备表</h3>
+	        </div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#groupAdd">增加</button>
+				<button type="button" class="btn btn-warning">修改</button>
+				<button type="button" class="btn btn-warning">删除</button>
+			</div>
+			<div class="box-body">
+					<table id="EquipGroup" class="table table-bordered table-hover" data-page-length="10" data-order='[1,"asc"]'>
+					<thead>
+	                <tr>
+	                  <th>设备ID</th>
+	                  <th>设备名称</th>
+	                  <th>设备状态</th>
+	                  <th>设备类型</th>  
+	                </tr>
+	                </thead>
+					<tbody>
+	                <tr>
+	                  <td>Trident</td>
+	                  <td>Internet
+	                    Explorer 4.0
+	                  </td>
+	                  <td>Win 95+</td>
+	                  <td>X</td>
+	                </tr>
+					<tr>
+	                  <td>Trident</td>
+	                  <td>Internet
+	                    Explorer 4.0
+	                  </td>
+	                  <td>Win 95+</td>
+	                  <td>X</td>
+	                </tr>
+					<tr>
+	                  <td>Trident</td>
+	                  <td>Internet
+	                    Explorer 4.0
+	                  </td>
+	                  <td>Win 95+</td>
+	                  <td>X</td>
+	                </tr>
+					<tr>
+	                  <td>Trident</td>
+	                  <td>Internet
+	                    Explorer 4.0
+	                  </td>
+	                  <td>Win 95+</td>
+	                  <td>X</td>
+	                </tr>
+					<tr>
+	                  <td>Trident</td>
+	                  <td>Internet
+	                    Explorer 4.0
+	                  </td>
+	                  <td>Win 95+</td>
+	                  <td>X</td>
+	                </tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</section>
+	</div>
+</div>
+<!-- ./wrapper -->
+
+<!-- modal -->
+<div class="modal fade" id="groupAdd" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="box-title" id="groupAdd">增加设备组</h4>
+			</div>
+			<!-- 内容 -->
+			<!-- 提交表单 -->
+			<form role="form">
+			<div class="box-body">
+				<div class="form-group">
+					<label for="groupName">设备组名称</label>
+					<input type="text" class="form-control" placeholder="设备组名称">
+					<label for="groupManager">管理员</label>
+					<select class="form-control select2">
+						<option> aaa</option>
+					</select>
+				</div>
+			</div>
+			<div class="box-footer">
+				<button type="button" class="btn pull-right btn-default" data-dismiss="modal">关闭</button>
+				<button type="submit" class="btn btn-info pull-right">提交</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- REQUIRED JS SCRIPTS -->
+
+<!-- jQuery 2.2.3 -->
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<!-- Bootstrap 3.3.6 -->
+<script src="${pageContext.request.contextPath}/AdminLTE/bootstrap/js/bootstrap.min.js"></script>
+<!-- AdminLTE App -->
+<script src="${pageContext.request.contextPath}/AdminLTE/dist/js/app.min.js"></script>
+
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/Datatables-1.10.12/media/js/jquery.dataTables.min.js"></script>
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/Datatables-1.10.12/media/js/dataTables.bootstrap.js"></script>
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/Datatables-1.10.12/extensions/Select/js/dataTables.select.min.js"></script>
+<script src="${pageContext.request.contextPath}/AdminLTE/dist/js/demo.js"></script>
+
+<!-- Optionally, you can add Slimscroll and FastClick plugins.
+     Both of these plugins are recommended to enhance sthe
+     user experience. Slimscroll is required when using the
+     fixed layout. -->
+<script>
+	$(function (){
+	var EquipGroup=$("#EquipGroup").DataTable(
+	{
+		"paging": true,
+		"lengthChange": false,
+		"searching": false,
+		"ordering": true,
+		"info": false,
+		"select": 'single',
+		"autoWidth": false,
+		"fixedColumns": {
+			"leftColumns": 1,
+			"rightColums": 2
+		},
+		"ajax": {
+			"url":"/Hello"
+		}
+	}
+	);
+	var index=1;
+	//双击获取数据
+	EquipGroup.on("dblclick","td",function(){index=2;EquipGroup.row(index).select();})
+	EquipGroup.on("select.td",function(e,dt,type,indexes){index=indexes;alert(index);})
+	EquipGroup.on("deselect.td",function(e,dt,type,indexes){index=indexes;alert(index);})
+
+	});
+
+</script>
+</body>
+</html>
