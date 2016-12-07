@@ -95,9 +95,9 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">功能</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/CheckSystem/jsp/equi_manager_list.jsp"><i class="fa fa-building"></i> <span>设备列表</span></a></li>
-        <li><a href="/CheckSystem/jsp/equi_manager_plan.jsp"><i class="fa fa-building"></i> <span>巡检计划</span></a></li>
-        <li><a href="/CheckSystem/jsp/equi_manager_repair.jsp"><i class="fa fa-building"></i> <span>设备报修</span></a></li>
+        <li><a href="/CheckSystem/jsp/emequipment.jsp"><i class="fa fa-building"></i> <span>设备列表</span></a></li>
+        <li><a href="/CheckSystem/jsp/emplan.jsp"><i class="fa fa-building"></i> <span>巡检计划</span></a></li>
+        <li><a href="/CheckSystem/jsp/emrepair.jsp"><i class="fa fa-building"></i> <span>设备报修</span></a></li>
     </section>
   </aside>
 
@@ -108,29 +108,137 @@ desired effect
     <section class="content">
         <!-- Your Page Content Here -->
 		<div class="row">
-	        <div class="col-xs-8">
+	        <div class="col-xs-12">
 	          <div class="box">
 	            <div class="box-header ">
-	              <h3 class="box-title">故障报修</h3>
+	              <h3 class="box-title">计划列表</h3>
 	            </div>
+	            <div class="btn-group">
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#groupAdd">增加</button>
+					<button type="button" class="btn btn-warning">修改</button>
+					<button type="button" class="btn btn-warning">删除</button>
+				</div>
 				<div class="box-body">
-					<form role="form">
-							<div class="form-group">
-								<label for="EqName" >设备名称</label>
-									<input id="EqName" type="text" class="form-control" placeholder="设备名称">
-								<label for="EqNum">设备编号</label>
-									<input id="EqNum"  type="text" class="form-control" placeholder="设备编号">
-								<label for="info">上报信息</label>
-									<textarea id="info" class="form-control" rows="8" placeholder="故障描述及整改措施"></textarea>
-							</div>
-					<div class="box-footer">
-						<button type="reset" class="btn pull-right btn-default">重置</button>
-						<!-- <button type="submit" class="btn btn-info pull-right" style="margin-right:20px">提交</button> -->
-						<input  type="button" id="submit" class="btn btn-info pull-right" style="margin-right:20px" value="提交"/>
-					</div>
-				  </form>
+					<table id="EquipGroup" class="table table-bordered table-hover" data-page-length="10" data-order='[1,"asc"]'>
+				<thead>
+                <tr>
+                  <th>设备ID</th>
+                  <th>设备名称</th>
+                  <th>设备状态</th>
+                  <th>设备类型</th>  
+                </tr>
+                </thead>
+				<tbody>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				</tbody>
+			</table>
 				</div>	
 			 </div>
+		   
+		   	 <div class="box">
+	            <div class="box-header ">
+	              <h3 class="box-title">计划详情</h3>
+	            </div>
+	            <div class="btn-group">
+					<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#groupAdd">增加</button>
+					<button type="button" class="btn btn-warning">修改</button>
+					<button type="button" class="btn btn-warning">删除</button>
+				</div>
+				<div class="box-body">
+					<table id="EquipGroup" class="table table-bordered table-hover" data-page-length="10" data-order='[1,"asc"]'>
+				<thead>
+                <tr>
+                  <th>设备ID</th>
+                  <th>设备名称</th>
+                  <th>设备状态</th>
+                  <th>设备类型</th>  
+                </tr>
+                </thead>
+				<tbody>
+                <tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				<tr>
+                  <td>Trident</td>
+                  <td>Internet
+                    Explorer 4.0
+                  </td>
+                  <td>Win 95+</td>
+                  <td>X</td>
+                </tr>
+				</tbody>
+			</table>
+				</div>	
+			 </div>
+
 		   </div>
 		</div>
 	</section>

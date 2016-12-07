@@ -75,11 +75,13 @@ public class Login extends HttpServlet
 						switch(power)
 						{
 							case 0:
+								response.sendRedirect("/CheckSystem/jsp/smuser.jsp");
+								//request.getRequestDispatcher("/jsp/smuser.jsp").forward(request, response);
 								break;
 							case 1:
 								break;
 							case 2:
-								request.getRequestDispatcher("/jsp/equi_manager_list.jsp").forward(request, response);
+								request.getRequestDispatcher("/jsp/emequipment.jsp").forward(request, response);
 								break;
 							case 3:
 								System.out.println("跳转到巡检人界面");

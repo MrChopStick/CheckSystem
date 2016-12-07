@@ -1,19 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
  <% 
-    String staff_id = (String)session.getAttribute("id");
-	if(staff_id==null||staff_id.equals(""))
+    String id = (String)session.getAttribute("id");
+	if(id==null||id.equals(""))
 		response.sendRedirect("/CheckSystem/jsp/login.jsp");
 	String name = (String)session.getAttribute("name");
 	String job = (String)session.getAttribute("job");
 %>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>巡检系统-设备管理员</title>
+  <title>用户管理-系统管理员</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.6 -->
@@ -28,6 +27,12 @@
   <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/select/css/select.bootstrap.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/select/css/select.dataTables.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/select/css/select.foundation.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/select/css/select.semanticui.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/plugins/select/css/select.jqueryui.min.css">
+  
   <link rel="stylesheet" href="${pageContext.request.contextPath}/AdminLTE/dist/css/skins/_all-skins.min.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -35,6 +40,7 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <!-- <script type="text/javascript" scr="${pageContext.request.contextPath}/js/smuser.js"></script> -->
 </head>
 <!--
 BODY TAG OPTIONS:
@@ -95,70 +101,109 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">功能</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/CheckSystem/jsp/equi_manager_list.jsp"><i class="fa fa-building"></i> <span>设备列表</span></a></li>
-        <li><a href="/CheckSystem/jsp/equi_manager_plan.jsp"><i class="fa fa-building"></i> <span>巡检计划</span></a></li>
-        <li><a href="/CheckSystem/jsp/equi_manager_repair.jsp"><i class="fa fa-building"></i> <span>设备报修</span></a></li>
+        <li><a href="/CheckSystem/jsp/smuser.jsp"><i class="fa fa-building"></i> <span>用户管理</span></a></li>
+        <li><a href="/CheckSystem/jsp/smequipment.jsp"><i class="fa fa-building"></i> <span>设备管理</span></a></li>
+        <li><a href="/CheckSystem/jsp/smcheckitem.jsp"><i class="fa fa-building"></i> <span>设备检查项</span></a></li>
     </section>
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <!-- Main content -->
     <section class="content">
+        <!-- Your Page Content Here -->
 		<div class="row">
-	        <div class="col-xs-12">
+	        <div class="col-xs-9">
 	          <div class="box">
 	            <div class="box-header ">
-	              <h3 class="box-title">设备列表</h3>
+	              <h3 class="box-title">部门列表</h3>
 	            </div>
+	            <div class="btn-group">
+					<button id="addDe" type="button" class="btn btn-warning">增加</button>
+					<button id="updateDe" type="button" class="btn btn-warning">修改</button>
+					<button id="deleteDe" type="button" class="btn btn-warning">删除</button>
+				</div>
 				<div class="box-body">
-					<table id="CheckTask" class="table table-bordered table-hover" data-page-length="10">
-						<thead>
-			                <tr>
-			                  <th>编号</th>
-			                  <th>设备编号</th>
-			                  <th>设备名</th>
-			                  <th>设备状态</th>
-			                  <th>设备类型</th>
-			                </tr>
-		                </thead>
-		                <tr>
-		                	<td>编号</td>
-			                  <td>设备编号</td>
-			                  <td>设备名</td>
-			                  <td>设备状态</td>
-			                  <td>设备类型</td>
-		                </tr>
-		                <tr>
-		                	<td>编号</td>
-			                  <td>设备编号</td>
-			                  <td>设备名</td>
-			                  <td>设备状态</td>
-			                  <td>设备类型</td>
-		                </tr>
-		                <tr>
-		                	<td>编号</td>
-			                  <td>设备编号</td>
-			                  <td>设备名</td>
-			                  <td>设备状态</td>
-			                  <td>设备类型</td>
-		                </tr>
-		                <tr>
-		                	<td>编号</td>
-			                  <td>设备编号</td>
-			                  <td>设备名</td>
-			                  <td>设备状态</td>
-			                  <td>设备类型</td>
-		                </tr>
-				  </table>
-		     	</div>
-		     </div>
+					<table id="department_list" class="table table-bordered table-hover" data-page-length="10">
+				<thead>
+                <tr>
+                  <th>编号</th>
+                  <th>部门</th>
+                  <th>管理员</th>  
+                </tr>
+                </thead>
+				<tbody>
+                
+				</tbody>
+			</table>
+				</div>	
+			 </div>
+		   </div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+			   	 <div class="box">
+		            <div class="box-header ">
+		              <h3 class="box-title">人员列表</h3>
+		            </div>
+		            <div class="btn-group">
+						<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#groupAdd">增加</button>
+						<button type="button" class="btn btn-warning">修改</button>
+						<button type="button" class="btn btn-warning">删除</button>
+					</div>
+					<div class="box-body">
+						<table id="staff_list" class="table table-bordered table-hover" data-page-length="10"'>
+					<thead>
+	                <tr>
+	                  <th>ID</th>
+	                  <th>姓名</th>
+	                  <th>职务</th>
+	                  <th>电话</th>  
+	                </tr>
+	                </thead>
+					<tbody>
+	               
+					</tbody>
+				</table>
+					</div>	
+				 </div>
 			</div>
 		</div>
 	</section>
 	</div>
 </div>
 <!-- ./wrapper -->
-
+<!-- modal -->
+<div class="modal fade" id="modalAddDe" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="box-title" id="checkListTitle">添加部门</h4>
+			</div>
+			<!-- 内容 -->
+			<!-- 提交表单 -->
+			<form role="form">
+				<div class="box-body">
+					<div class="form-group" id = "checkList">
+						<label>部门编号</label>
+						<input id="AddDeNum"   type="text" class="form-control"/>
+						<label>部门名称</label>
+						<input id="AddDeName"  type="text" class="form-control"/>
+						<label>管理员</label>
+						<select id="AddDeManager" class="form-control select2">
+						</select>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="button" class="btn pull-right btn-default" data-dismiss="modal">关闭</button>
+					<button id="sureAddDe" type="submit" class="btn btn-info pull-right">提交</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 
 <!-- jQuery 2.2.3 -->
 <script src="${pageContext.request.contextPath}/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
@@ -175,6 +220,8 @@ desired effect
 <script src="${pageContext.request.contextPath}/AdminLTE/dist/js/app.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="${pageContext.request.contextPath}/AdminLTE/dist/js/demo.js"></script>
+<script src="${pageContext.request.contextPath}/AdminLTE/plugins/select/js/dataTables.select.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/smuser.js"></script>
 <!-- page script -->
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
@@ -182,60 +229,12 @@ desired effect
      user experience. Slimscroll is required when using the
      fixed layout. -->
 <script>
-$(document).ready(function(){
-	alert("ready");
-	var jsonID = new Object();
-	
-	var id=<%=staff_id%>;
-	jsonID.id=id.toString();
-	var jsonIDS=JSON.stringify(jsonID,null,2);
-	alert(jsonIDS);
-	var table = $('#CheckTask').DataTable({
-	    "paging": true,
-		"lengthChange": false,
-		"searching": false,
-		"ordering": false,
-		"info": false,
-		"select": 'single',
-		"autoWidth": false,
-		"pagingType":   "full_numbers",
-		language: {
-	        "sProcessing": "处理中...",
-	        "sLengthMenu": "显示 _MENU_ 项结果",
-	        "sZeroRecords": "没有匹配结果",
-	        "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
-	        "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
-	        "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
-	        "sInfoPostFix": "",
-	        "sSearch": "搜索:",
-	        "sUrl": "",
-	        "sEmptyTable": "表中数据为空",
-	        "sLoadingRecords": "载入中...",
-	        "sInfoThousands": ",",
-	        "oPaginate": {
-	            "sFirst": "首页",
-	            "sPrevious": "上页",
-	            "sNext": "下页",
-	            "sLast": "末页"
-	        },
-	        "oAria": {
-	            "sSortAscending": ": 以升序排列此列",
-	            "sSortDescending": ": 以降序排列此列"
-	        }
-	    },	
-	    "ajax": {
-	        "url": "/CheckSystem/Eq?Type=GetEqGroupList&json="+jsonIDS,
-	        "type": "POST"
-	      }
-	} );
-});
- 
 
 	$('#submit').click(function(){
 		var EqName = $('#EqName').val();
 		var EqNum = $('#EqNum').val();
 		var EqInfo = $('#info').val();
-		var id=<%=staff_id%>;
+		var id=<%=id%>;
 		var jsonObject = new Object();
 		jsonObject.repair_eqid=EqNum;
 		jsonObject.repair_detail=EqInfo;
@@ -259,8 +258,6 @@ $(document).ready(function(){
 		}).always(function(){
 			alert("报修");
 		});
-		
-		
 		function getNowFormatDate() {
 		    var date = new Date();
 		    var seperator1 = "-";
@@ -277,7 +274,7 @@ $(document).ready(function(){
 		            + " " + date.getHours() + seperator2 + date.getMinutes()
 		            + seperator2 + date.getSeconds();
 		    return currentdate;
-		}	
+		}
 	});
 </script>
 </body>
