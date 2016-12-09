@@ -101,7 +101,7 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">功能</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/CheckSystem/jsp/smuser.jsp"><i class="fa fa-building"></i> <span>部门管理</span></a></li>
+        <li><a href="/CheckSystem/jsp/smuser.jsp"><i class="fa fa-building"></i> <span>用户管理</span></a></li>
         <li><a href="/CheckSystem/jsp/smstaff.jsp"><i class="fa fa-building"></i> <span>人员管理</span></a></li>
         <li><a href="/CheckSystem/jsp/smequipment.jsp"><i class="fa fa-building"></i> <span>设备管理</span></a></li>
         <li><a href="/CheckSystem/jsp/smcheckitem.jsp"><i class="fa fa-building"></i> <span>设备检查项</span></a></li>
@@ -115,46 +115,18 @@ desired effect
     <section class="content">
         <!-- Your Page Content Here -->
 		<div class="row">
-	        <div class="col-xs-9">
-	          <div class="box">
-	            <div class="box-header ">
-	              <h3 class="box-title">部门列表</h3>
-	            </div>
-	            <div class="btn-group">
-					<button id="addDe" type="button" class="btn btn-warning">增加</button>
-					<button id="updateDe" type="button" class="btn btn-warning">修改</button>
-					<button id="deleteDe" type="button" class="btn btn-warning">删除</button>
-				</div>
-				<div class="box-body">
-					<table id="department_list" class="table table-bordered table-hover" data-page-length="6">
-				<thead>
-                <tr>
-                  <th>编号</th>
-                  <th>部门</th>
-                  <th>管理员</th>  
-                </tr>
-                </thead>
-				<tbody>
-                
-				</tbody>
-			</table>
-				</div>	
-			 </div>
-		   </div>
-		</div>
-		<div class="row">
 			<div class="col-xs-12">
 			   	 <div class="box">
 		            <div class="box-header ">
 		              <h3 class="box-title">人员列表</h3>
 		            </div>
 		            <div class="btn-group">
-						<button  type="button" class="btn btn-warning">增加</button>
+						<button id="add-staff-button" type="button" class="btn btn-warning">增加</button>
 						<button type="button" class="btn btn-warning">修改</button>
 						<button type="button" class="btn btn-warning">删除</button>
 					</div>
 					<div class="box-body">
-						<table id="staff_list" class="table table-bordered table-hover" data-page-length="6"'>
+						<table id="staff_list" class="table table-bordered table-hover" data-page-length="13"'>
 					<thead>
 	                <tr>
 	                  <th>ID</th>
@@ -206,32 +178,42 @@ desired effect
 	</div>
 </div>
 
-<!-- modal -->
-<!-- modal -->
-<div class="modal fade" id="modalUpdateDe" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
+<div class="modal fade" id="modalAddStaff" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="box box-primary">
 			<div class="box-header with-border">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="box-title" id="checkListTitle">修改部门</h4>
+				<h4 class="box-title" id="checkListTitle">添加部门</h4>
 			</div>
 			<!-- 内容 -->
 			<!-- 提交表单 -->
 			<form role="form">
 				<div class="box-body">
 					<div class="form-group" id = "checkList">
-						<label>部门编号</label>
-						<input id="UpdateDeNum"  readonly="readonly" type="text" class="form-control"/>
-						<label>部门名称</label>
-						<input id="UpdateDeName" readonly="readonly" type="text" class="form-control"/>
-						<label>管理员</label>
-						<select id="UpdateDeManager" class="form-control select2">
+						<label>ID</label>
+						<input id="AddStaffId"   type="text" class="form-control"/>
+						<label>姓名</label>
+						<input id="AddStaffName"  type="text" class="form-control"/>
+						<label>职务</label>
+						<select id="AddStaffJob" class="form-control select2">
+							<option>系统管理员</option>
+							<option>部门管理员</option>
+							<option>设备管理员</option>
+							<option>巡检人</option>
+							<option>设备使用人</option>
 						</select>
+						<label>部门</label>
+						<select id="AddStaffDepartment" class="form-control select2">
+						</select>
+						<label>电话</label>
+						<input id="AddStaffPhone"  type="text" class="form-control"/>
+						<label>密码</label>
+						<input id="AddStaffPwd"  type="text" class="form-control"/>
 					</div>
 				</div>
 				<div class="box-footer">
 					<button type="button" class="btn pull-right btn-default" data-dismiss="modal">关闭</button>
-					<button id="sureUpdateDe" type="submit" class="btn btn-info pull-right">提交</button>
+					<button id="sureAddStaff" type="button" class="btn btn-info pull-right">提交</button>
 				</div>
 			</form>
 		</div>
@@ -283,7 +265,7 @@ desired effect
 <!-- AdminLTE for demo purposes -->
 <script src="${pageContext.request.contextPath}/AdminLTE/dist/js/demo.js"></script>
 <script src="${pageContext.request.contextPath}/AdminLTE/plugins/select/js/dataTables.select.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/smuser.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/smstaff.js"></script>
 <!-- page script -->
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.

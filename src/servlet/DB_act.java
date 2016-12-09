@@ -722,11 +722,83 @@ public class DB_act
 		}
 	}
 
+	//部门增加
+	public static boolean Department_insert(String departmentId, String departmentName, String managerId){
+		String query = new String("insert into department(department_id,department_name,manager_id) values(?,?,?)");
+		PreUnit u = PreUnit.getUnit(query);
+		if (u == null)
+			return false;
+		try
+		{
+			u.st.setString(1, departmentId);
+			u.st.setString(2, departmentName);
+			u.st.setString(3, managerId);
+			if (1 == u.st.executeUpdate())
+			{
+				u.close();
+				return true;
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		u.close();
+		return false;
+	}
+	//部门更新
+	public static boolean Department_update(String departmentId,String managerId)
+	{
+		String update = new String("update department set manager_id= ?" +" where department_id=?");
+		PreUnit u = PreUnit.getUnit(update);
+		if (u == null)
+		{
+			return false;
+		}
+		try
+		{
+			u.st.setString(1, managerId );
+			u.st.setString(2, departmentId);
+			if (1 == u.st.executeUpdate())
+			{
+				u.close();
+				return true;
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		u.close();
+		return false;
+	}
+	//部门删除
+	public static boolean Department_delete(String departmentId)
+	{
+		String update = new String("update department set manager_id= ?" +" where department_id=?");
+		PreUnit u = PreUnit.getUnit(update);
+		if (u == null)
+		{
+			return false;
+		}
+		try
+		{
+			u.st.setString(2, departmentId);
+			if (1 == u.st.executeUpdate())
+			{
+				u.close();
+				return true;
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		u.close();
+		return false;
+	}
 	// 人员增加
-	public static boolean Staff_insert(String job, String pwd, String name, String phone, int role)
+	public static boolean Staff_insert(String job, String pwd, String name, String phone, int departmentId,int id, int power)
 	{
 		String query = new String(
-				"Insert into staff(staff_job,staff_pwd,staff_name,staff_phone,staff_role) values(?,?,?,?,?)");
+				"Insert into staff(staff_job,staff_pwd,staff_name,staff_phone,department_id,staff_id,staff_power) values(?,?,?,?,?,?,?)");
 		PreUnit u = PreUnit.getUnit(query);
 		if (u == null)
 			return false;
@@ -736,7 +808,9 @@ public class DB_act
 			u.st.setString(2, pwd);
 			u.st.setString(3, name);
 			u.st.setString(4, phone);
-			u.st.setInt(5, role);
+			u.st.setInt(5, departmentId);
+			u.st.setInt(6,id);
+			u.st.setInt(7,power);
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -822,7 +896,6 @@ public class DB_act
 		}
 		return requestData.toString();
 	}
-
 }
 
 class PreUnit

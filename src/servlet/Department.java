@@ -38,6 +38,7 @@ public class Department extends HttpServlet
 			requestJson = new JSONObject();
 		String result = new String();
 		Unit unit = Unit.getUnit();
+		PreUnit u;
 		ResultSetMetaData meta;
 		String query ;
 		switch(type)
@@ -65,6 +66,7 @@ public class Department extends HttpServlet
 							System.out.println("没有结果");
 						tempArray.put(getManager.rs.getString(1));
 						departmentArray.put(tempArray);
+						getManager.close();
 					}
 					//departmentObject.put("data", departmentArray);
 					result = departmentArray.toString();
@@ -75,11 +77,25 @@ public class Department extends HttpServlet
 				}
 				break;
 			case "Update":
+//				String update = "update department set manager_id="+requestJson.getString("managerId")+" where department_id="+requestJson.getString("departmentId");            
+//				u = PreUnit.getUnit(update);
+//				if(u == null)
+//					result="Faild";
+//				else
+//					result="success";
+//				System.out.println(result+update);
+//				u.close();
+				String departmentId = requestJson.getString("departmentId");
+				String managerId=requestJson.getString("managerId");
+				if(DB_act.Department_update(departmentId, managerId))
+					result = "success";
+				else
+					result = "faild";
 				break;
 			case "Insert":
 				String insert = "insert into department values("+requestJson.getString("departmentId")+","
 								+"'"+requestJson.getString("departmentName")+"'"+","+requestJson.getString("managerId")+")";
-				PreUnit u = PreUnit.getUnit(insert);
+				u = PreUnit.getUnit(insert);
 				if(u == null)
 					result="Faild";
 				else
@@ -120,6 +136,39 @@ public class Department extends HttpServlet
 				}
 				result=managerList.toString();
 				break;
+			case "GetStaffList":
+				String queryCondition;
+				String Id=request.getParameter("departmentId");
+				if(Id.equals("all"))
+					queryCondition="1=1";
+				else
+					queryCondition= "department_id="+request.getParameter("departmentId");
+				System.out.println(queryCondition);
+				JSONObject staffList = new JSONObject();
+				JSONArray staffArray = new JSONArray();
+				if(DB_act.Staff_select(queryCondition, unit))
+				{
+					try
+					{
+						while(unit.rs.next())
+						{
+							JSONArray tempArray = new JSONArray();
+							tempArray.put(unit.rs.getString(1));
+							tempArray.put(unit.rs.getString(2));
+							tempArray.put(unit.rs.getString(3));
+							tempArray.put(unit.rs.getString(4));
+							staffArray.put(tempArray);
+						}
+						staffList.put("data", staffArray);
+					} catch (SQLException e)
+					{
+						e.printStackTrace();
+					}
+				}
+				result=staffList.toString();
+				break;
+			default:
+				unit.close();
 		}
 		System.out.println(result);
 		response.getWriter().append(result);
