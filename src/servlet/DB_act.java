@@ -917,9 +917,7 @@ class PreUnit
 		}
 	}
 
-	private PreUnit()
-	{
-	}
+	private PreUnit(){}
 
 	public static PreUnit getUnit(String query)
 	{
