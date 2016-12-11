@@ -14,6 +14,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 @WebServlet("/Department")
+//部门管理和部门人员管理
 public class Department extends HttpServlet
 {
 	private static final long serialVersionUID = 1L;
@@ -152,11 +153,28 @@ public class Department extends HttpServlet
 					{
 						while(unit.rs.next())
 						{
+							
+							int tempDepartmentId = unit.rs.getInt(7);
+							System.out.println(tempDepartmentId);
+							String queryDepartment = "department_id="+tempDepartmentId;
+							String departmentName = null;
+							Unit getstaff_unit = Unit.getUnit();
+							if(DB_act.Department_select(queryDepartment, getstaff_unit))
+							{
+								getstaff_unit.rs.next();
+								departmentName = getstaff_unit.rs.getString(2);
+								getstaff_unit.close();
+							}
+							
 							JSONArray tempArray = new JSONArray();
 							tempArray.put(unit.rs.getString(1));
 							tempArray.put(unit.rs.getString(2));
 							tempArray.put(unit.rs.getString(3));
 							tempArray.put(unit.rs.getString(4));
+							tempArray.put(departmentName);
+							tempArray.put(unit.rs.getString(6));
+							
+							
 							staffArray.put(tempArray);
 						}
 						staffList.put("data", staffArray);

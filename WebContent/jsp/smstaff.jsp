@@ -101,11 +101,26 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">功能</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/CheckSystem/jsp/smuser.jsp"><i class="fa fa-building"></i> <span>用户管理</span></a></li>
-        <li><a href="/CheckSystem/jsp/smstaff.jsp"><i class="fa fa-building"></i> <span>人员管理</span></a></li>
-        <li><a href="/CheckSystem/jsp/smequipment.jsp"><i class="fa fa-building"></i> <span>设备管理</span></a></li>
-        <li><a href="/CheckSystem/jsp/smcheckitem.jsp"><i class="fa fa-building"></i> <span>设备检查项</span></a></li>
-    </section>
+         <li class="active treeview">
+        	<a href="#"><i class="fa fa-building"></i> <span>用户管理</span></a>
+       		<ul class="treeview-menu">
+				<li><a href="/CheckSystem/jsp/smStaff.jsp"><i class="fa fa-circle-o"></i>人员</a></li>
+				<li><a href="/CheckSystem/jsp/smDepart.jsp"><i class="fa fa-circle-o"></i>部门</a></li> 
+			</ul>
+        	
+        </li>
+       
+        <li >
+        	<a href="#"><i class="fa fa-building"></i> <span>设备管理</span></a>
+        	<ul class="treeview-menu">
+					<li><a href="smEquipGroup.jsp"><i class="fa fa-circle-o"></i>设备组</a></li>
+					<li><a href="smEquipList.jsp"><i class="fa fa-circle-o"></i>全部设备</a></li> 
+			</ul>
+        </li>
+        <li>
+        	<a href="/CheckSystem/jsp/smCheckitem.jsp"><i class="fa fa-building"></i> <span>巡检项目</span></a>
+        </li>
+      </section>
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
@@ -122,8 +137,8 @@ desired effect
 		            </div>
 		            <div class="btn-group">
 						<button id="add-staff-button" type="button" class="btn btn-warning">增加</button>
-						<button type="button" class="btn btn-warning">修改</button>
-						<button type="button" class="btn btn-warning">删除</button>
+						<button id="update-staff-button" type="button" class="btn btn-warning">修改</button>
+						<button id="delete-staff-button" type="button" class="btn btn-warning">删除</button>
 					</div>
 					<div class="box-body">
 						<table id="staff_list" class="table table-bordered table-hover" data-page-length="13"'>
@@ -133,6 +148,8 @@ desired effect
 	                  <th>姓名</th>
 	                  <th>职务</th>
 	                  <th>电话</th>  
+	                  <th>部门</th>
+	                  <th>密码</th>
 	                </tr>
 	                </thead>
 					<tbody>
@@ -147,37 +164,8 @@ desired effect
 	</div>
 </div>
 <!-- ./wrapper -->
-<!-- modal -->
-<div class="modal fade" id="modalAddDe" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="box box-primary">
-			<div class="box-header with-border">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="box-title" id="checkListTitle">添加部门</h4>
-			</div>
-			<!-- 内容 -->
-			<!-- 提交表单 -->
-			<form role="form">
-				<div class="box-body">
-					<div class="form-group" id = "checkList">
-						<label>部门编号</label>
-						<input id="AddDeNum"   type="text" class="form-control"/>
-						<label>部门名称</label>
-						<input id="AddDeName"  type="text" class="form-control"/>
-						<label>管理员</label>
-						<select id="AddDeManager" class="form-control select2">
-						</select>
-					</div>
-				</div>
-				<div class="box-footer">
-					<button type="button" class="btn pull-right btn-default" data-dismiss="modal">关闭</button>
-					<button id="sureAddDe" type="submit" class="btn btn-info pull-right">提交</button>
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
 
+<!-- 添加职工 modal -->
 <div class="modal fade" id="modalAddStaff" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="box box-primary">
@@ -220,35 +208,97 @@ desired effect
 	</div>
 </div>
 <!-- modal -->
-<div class="modal fade" id="modalUpdateDe" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
+
+<!-- 修改职工 modal -->
+<div class="modal fade" id="modalUpdateStaff" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="box box-primary">
 			<div class="box-header with-border">
 				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="box-title" id="checkListTitle">修改部门</h4>
+				<h4 class="box-title" id="checkListTitle">添加部门</h4>
 			</div>
 			<!-- 内容 -->
 			<!-- 提交表单 -->
 			<form role="form">
 				<div class="box-body">
 					<div class="form-group" id = "checkList">
-						<label>部门编号</label>
-						<input id="UpdateDeNum"  readonly="readonly" type="text" class="form-control"/>
-						<label>部门名称</label>
-						<input id="UpdateDeName" readonly="readonly" type="text" class="form-control"/>
-						<label>管理员</label>
-						<select id="UpdateDeManager" class="form-control select2">
+						<label>ID</label>
+						<input id="UpdateStaffId" readonly="readonly"  type="text" class="form-control"/>
+						<label>姓名</label>
+						<input id="UpdateStaffName"  type="text" class="form-control"/>
+						<label>职务</label>
+						<select id="UpdateStaffJob" class="form-control select2">
+							<option>系统管理员</option>
+							<option>部门管理员</option>
+							<option>设备管理员</option>
+							<option>巡检人</option>
+							<option>设备使用人</option>
 						</select>
+						<label>部门</label>
+						<select id="UpdateStaffDepartment" class="form-control select2">
+						</select>
+						<label>电话</label>
+						<input id="UpdateStaffPhone"  type="text" class="form-control"/>
+						<label>密码</label>
+						<input id="UpdateStaffPwd"  type="text" class="form-control"/>
 					</div>
 				</div>
 				<div class="box-footer">
 					<button type="button" class="btn pull-right btn-default" data-dismiss="modal">关闭</button>
-					<button id="sureUpdateDe" type="submit" class="btn btn-info pull-right">提交</button>
+					<button id="sureUpdateStaff" type="button" class="btn btn-info pull-right">提交</button>
 				</div>
 			</form>
 		</div>
 	</div>
 </div>
+<!-- modal -->
+
+
+<!-- 删除职工 modal -->
+<div class="modal fade" id="modalAddStaff" tabindex="-1" role="dialog" aria-labelledby="groupAdd" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="box box-primary">
+			<div class="box-header with-border">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="box-title" id="checkListTitle">添加部门</h4>
+			</div>
+			<!-- 内容 -->
+			<!-- 提交表单 -->
+			<form role="form">
+				<div class="box-body">
+					<div class="form-group" id = "checkList">
+						<label>ID</label>
+						<input id="AddStaffId"   type="text" class="form-control"/>
+						<label>姓名</label>
+						<input id="AddStaffName"  type="text" class="form-control"/>
+						<label>职务</label>
+						<select id="AddStaffJob" class="form-control select2">
+							<option>系统管理员</option>
+							<option>部门管理员</option>
+							<option>设备管理员</option>
+							<option>巡检人</option>
+							<option>设备使用人</option>
+						</select>
+						<label>部门</label>
+						<select id="AddStaffDepartment" class="form-control select2">
+						</select>
+						<label>电话</label>
+						<input id="AddStaffPhone"  type="text" class="form-control"/>
+						<label>密码</label>
+						<input id="AddStaffPwd"  type="text" class="form-control"/>
+					</div>
+				</div>
+				<div class="box-footer">
+					<button type="button" class="btn pull-right btn-default" data-dismiss="modal">关闭</button>
+					<button id="sureAddStaff" type="button" class="btn btn-info pull-right">提交</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<!-- modal -->
+
+
 <!-- jQuery 2.2.3 -->
 <script src="${pageContext.request.contextPath}/AdminLTE/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->

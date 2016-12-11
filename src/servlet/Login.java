@@ -1,6 +1,5 @@
 package servlet;
 
-//Realm
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -35,10 +34,8 @@ public class Login extends HttpServlet
 	{
 		response.setContentType("text/html;charset=utf-8");
 		request.setCharacterEncoding("utf-8");
-		System.out.println("login");
 		int staff_id ;
 		String staff_passwd = new String();
-		//String DataString = DB_act.get_request(request, response);
 		String DataString = request.getParameter("json");
 		String Type = request.getParameter("Type");
 		
@@ -75,22 +72,22 @@ public class Login extends HttpServlet
 						switch(power)
 						{
 							case 0:
-								response.sendRedirect("/CheckSystem/jsp/smuser.jsp");
+								response.sendRedirect("/CheckSystem/jsp/smStaff.jsp");
 								//request.getRequestDispatcher("/jsp/smuser.jsp").forward(request, response);
 								break;
 							case 1:
 								break;
 							case 2:
-								request.getRequestDispatcher("/jsp/emequipment.jsp").forward(request, response);
+								response.sendRedirect("/CheckSystem/jsp/emEquipment.jsp");
+								//request.getRequestDispatcher("/jsp/emEquipment.jsp").forward(request, response);
 								break;
 							case 3:
-								System.out.println("跳转到巡检人界面");
-								
-								//response.sendRedirect("/CheckSystem/jsp/staff_task.jsp");
-								request.getRequestDispatcher("/jsp/staff_task.jsp").forward(request, response);
+								response.sendRedirect("/CheckSystem/jsp/staffTask.jsp");
+								//request.getRequestDispatcher("/jsp/staffTask.jsp").forward(request, response);
 								break;
 							case 4:
-								request.getRequestDispatcher("/jsp/user_repair.jsp").forward(request, response);
+								response.sendRedirect("/CheckSystem/jsp/userRepair.jsp");
+								//request.getRequestDispatcher("/jsp/userRepair.jsp").forward(request, response);
 								break;
 						}
 						

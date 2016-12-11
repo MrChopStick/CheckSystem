@@ -87,7 +87,7 @@ public class Eq extends HttpServlet
 			eq_type = Integer.parseInt(json.getString("eq_type"));
 			eq_manager = Integer.parseInt(json.getString("eq_manager"));
 
-			response.getWriter().append(insert_eq(eq_name, eq_group, eq_type, eq_state, eq_manager));
+			//response.getWriter().append(insert_eq(eq_name, eq_group, eq_type, eq_state, eq_manager));
 			break;
 		case "Update":
 			eq_name = json.getString("eq_name");
@@ -95,7 +95,7 @@ public class Eq extends HttpServlet
 			eq_type = Integer.parseInt(json.getString("eq_type"));
 			eq_manager = Integer.parseInt(json.getString("eq_manager"));
 			eq_state = Integer.parseInt(json.getString("eq_state"));
-			response.getWriter().append(update_eq(eq_id, eq_name, eq_group, eq_type, eq_state, eq_manager));
+			//response.getWriter().append(update_eq(eq_id, eq_name, eq_group, eq_type, eq_state, eq_manager));
 			break;
 		case "Delete":
 			eq_id = Integer.parseInt(json.getString("eq_id"));
@@ -175,15 +175,15 @@ public class Eq extends HttpServlet
 
 	}
 
-	String insert_eq(String eq_name, int eq_group, int eq_type, int eq_state, int manager)
-	{
-		String result = new String();
-		if (DB_act.Equip_list_insert(eq_name, eq_group, eq_type, eq_state, manager))
-			result = "OK";
-		else
-			result = "Failed";
-		return result;
-	}
+//	String insert_eq(String eq_name, int eq_group, int eq_type, int eq_state, int manager)
+//	{
+//		String result = new String();
+//		if (DB_act.Equip_list_insert(eq_name, eq_group, eq_type, eq_state, manager))
+//			result = "OK";
+//		else
+//			result = "Failed";
+//		return result;
+//	}
 
 	String delete_eq(int eq_id) throws SQLException
 	{
@@ -200,15 +200,15 @@ public class Eq extends HttpServlet
 		}
 		return result;
 	}
-
-	String update_eq(int eq_id, String eq_name, int eq_group, int eq_type, int eq_state, int manager)
-	{
-		String result;
-		if (DB_act.Equip_list_update(eq_name, eq_group, eq_type, eq_state, manager, eq_id))
-			result = "OK";
-		else
-			result = "Failed";
-		return result;
-	}
+//
+//	String update_eq(int eq_id, String eq_name, int eq_group, int eq_type, int eq_state, int manager)
+//	{
+//		String result;
+//		if (DB_act.Equip_list_update(eq_name, eq_group, eq_type, eq_state, manager, eq_id))
+//			result = "OK";
+//		else
+//			result = "Failed";
+//		return result;
+//	}
 
 }

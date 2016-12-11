@@ -178,10 +178,10 @@ public class DB_act
 
 	// name,type,state为必填项，非必填项赋值为0
 	// eq_insert
-	public static boolean Equip_list_insert(String name, int group, int type, int state, int manager)
+	public static boolean Equip_list_insert(String name, int group, int type, int state)
 	{
 		String query = new String(
-				"INSERT INTO eq_list(eq_name,eq_group,eq_type,eq_state,eq_manager) values(?,?,?,?,?)");
+				"INSERT INTO eq_list(eq_name,eq_group,eq_type,eq_state) values(?,?,?,?)");
 		PreUnit u = PreUnit.getUnit(query);
 		if (null == u)
 			return false;
@@ -197,13 +197,6 @@ public class DB_act
 			}
 			u.st.setInt(3, type);
 			u.st.setInt(4, state);
-			if (manager == 0)
-			{
-				u.st.setNull(5, Types.INTEGER);
-			} else
-			{
-				u.st.setInt(5, manager);
-			}
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -213,21 +206,20 @@ public class DB_act
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 
 	}
 
 	// 设备表更行，要求同上
 	// eq_update,,,待测试
 	// 同上
-	public static boolean Equip_list_update(String name, int group, int type, int state, int manager, int id)
+	public static boolean Equip_list_update(String name, int group, int type, int state, int id)
 	{
 		String query = new String("UPDATE eq_list SET eq_name = ?,eq_group = ? ,eq_type = ? ,"
-				+ "eq_state = ?,eq_manager= ? WHERE eq_id = ?");
+				+ "eq_state = ? WHERE eq_id = ?");
 		PreUnit u = PreUnit.getUnit(query);
 		if (null == u)
 			return false;
@@ -243,14 +235,7 @@ public class DB_act
 			}
 			u.st.setInt(3, type);
 			u.st.setInt(4, state);
-			if (manager == 0)
-			{
-				u.st.setNull(5, Types.INTEGER);
-			} else
-			{
-				u.st.setInt(5, manager);
-			}
-			u.st.setInt(6, id);
+			u.st.setInt(5, id);
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -260,11 +245,10 @@ public class DB_act
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 	}
 
 	// eq_type查询
@@ -285,16 +269,15 @@ public class DB_act
 
 	// eq_type_insert
 	// check可以采用json格式
-	public static boolean Equip_type_insert(String name, String check)
+	public static boolean Equip_type_insert(String name)
 	{
-		String query = new String("Insert into eq_type(type_name,type_check) values(?,?)");
+		String query = new String("Insert into eq_type(type_name) values(?)");
 		PreUnit u = PreUnit.getUnit(query);
 		if (null == u)
 			return false;
 		try
 		{
 			u.st.setString(1, name);
-			u.st.setString(2, check);
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -303,26 +286,24 @@ public class DB_act
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 	}
 
 	// eq_type_update
 	// eq_type更新
-	public static boolean Equip_type_update(String name, String check, int id)
+	public static boolean Equip_type_update(String name, int id)
 	{
-		String query = new String("Update eq_type SET type_name = ?,type_check = ? WHERE type_id = ? ");
+		String query = new String("Update eq_type SET type_name = ? WHERE type_id = ? ");
 		PreUnit u = PreUnit.getUnit(query);
 		if (null == u)
 			return false;
 		try
 		{
 			u.st.setString(1, name);
-			u.st.setString(2, check);
-			u.st.setInt(3, id);
+			u.st.setInt(2, id);
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -332,11 +313,10 @@ public class DB_act
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 	}
 
 	// eq_group
@@ -356,15 +336,16 @@ public class DB_act
 	}
 
 	// eq_group_insert,id自增
-	public static boolean Equip_group_insert(int manager)
+	public static boolean Equip_group_insert(int manager,String name)
 	{
-		String query = new String("Insert into eq_group(group_manager) values(?)");
+		String query = new String("Insert into eq_group(group_manager,group_name) values(?,?)");
 		PreUnit u = PreUnit.getUnit(query);
 		if (u == null)
 			return false;
 		try
 		{
 			u.st.setInt(1, manager);
+			u.st.setString(2, name);
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -374,11 +355,9 @@ public class DB_act
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
 
 	}
 	// 修改按id直接处理
@@ -486,11 +465,10 @@ public class DB_act
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 	}
 
 	// check_plan_detail
@@ -555,11 +533,10 @@ public class DB_act
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 	}
 
 	// check_list,,,巡检任务
@@ -602,11 +579,10 @@ public class DB_act
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally
-		{
+		} 
 			u.close();
 			return false;
-		}
+		
 	}
 
 	public static boolean Check_list_update(int type, String name, String detail, int result, int id)
@@ -633,11 +609,10 @@ public class DB_act
 		} catch (SQLException e)
 		{
 			e.printStackTrace();
-		} finally
-		{
-			u.close();
-			return false;
-		}
+		} 
+		u.close();
+		return false;
+		
 	}
 	// 这个更新一大堆，采用查询的方法更新。
 
@@ -721,7 +696,25 @@ public class DB_act
 			return false;
 		}
 	}
-
+	
+	//部门查询
+	public static boolean Department_select(String queryCondition,Unit u)
+	{
+		StringBuffer query = new StringBuffer("Select * From department WHERE " + queryCondition);
+		System.out.println("query:"+query);
+		try
+		{
+			u.rs=u.st.executeQuery(query.toString());
+			System.out.println("queryFinish:"+query);
+			return true;
+		}catch (SQLException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	
 	//部门增加
 	public static boolean Department_insert(String departmentId, String departmentName, String managerId){
 		String query = new String("insert into department(department_id,department_name,manager_id) values(?,?,?)");
@@ -798,7 +791,7 @@ public class DB_act
 	public static boolean Staff_insert(String job, String pwd, String name, String phone, int departmentId,int id, int power)
 	{
 		String query = new String(
-				"Insert into staff(staff_job,staff_pwd,staff_name,staff_phone,department_id,staff_id,staff_power) values(?,?,?,?,?,?,?)");
+				"Insert into staff(staff_job,staff_passwd,staff_name,staff_phone,department_id,staff_id,staff_power) values(?,?,?,?,?,?,?)");
 		PreUnit u = PreUnit.getUnit(query);
 		if (u == null)
 			return false;
@@ -825,10 +818,10 @@ public class DB_act
 	}
 
 	// 人员数据更新
-	public static boolean Staff_update(String job, String pwd, String name, String phone, int role, int id)
+	public static boolean Staff_update(String job, String pwd, String name, String phone, int power,int department, int id)
 	{
 		String query = new String(
-				"Update staff SET staff_job= ?,staff_pwd= ?,staff_name= ?,staff_phone= ?,staff_role= ?"
+				"Update staff SET staff_job= ?,staff_passwd= ?,staff_name= ?,staff_phone= ?,staff_power= ?,department_id=?"
 						+ " WHERE staff_id= ?");
 		PreUnit u = PreUnit.getUnit(query);
 		if (u == null)
@@ -839,8 +832,32 @@ public class DB_act
 			u.st.setString(2, pwd);
 			u.st.setString(3, name);
 			u.st.setString(4, phone);
-			u.st.setInt(5, role);
-			u.st.setInt(6, id);
+			u.st.setInt(5, power);
+			u.st.setInt(6, department);
+			u.st.setInt(7, id);
+			if (1 == u.st.executeUpdate())
+			{
+				u.close();
+				return true;
+			}
+		} catch (SQLException e)
+		{
+			e.printStackTrace();
+		}
+		u.close();
+		return false;
+	}
+	//人员删除
+	public static boolean Staff_delete(int id)
+	{
+		String query = "delete from staff where staff_id = ?";
+		PreUnit u = PreUnit.getUnit(query);
+		if (u == null)
+			return false;
+		try
+		{
+			u.st.setInt(1, id);
+			
 			if (1 == u.st.executeUpdate())
 			{
 				u.close();
@@ -917,7 +934,9 @@ class PreUnit
 		}
 	}
 
-	private PreUnit(){}
+	private PreUnit()
+	{
+	}
 
 	public static PreUnit getUnit(String query)
 	{

@@ -95,9 +95,9 @@ desired effect
       <ul class="sidebar-menu">
         <li class="header">功能</li>
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="/CheckSystem/jsp/emequipment.jsp"><i class="fa fa-building"></i> <span>设备列表</span></a></li>
-        <li><a href="/CheckSystem/jsp/emplan.jsp"><i class="fa fa-building"></i> <span>巡检计划</span></a></li>
-        <li><a href="/CheckSystem/jsp/emrepair.jsp"><i class="fa fa-building"></i> <span>设备报修</span></a></li>
+         <li><a href="/CheckSystem/jsp/emEquipment.jsp"><i class="fa fa-building"></i> <span>设备列表</span></a></li>
+        <li><a href="/CheckSystem/jsp/emPlan.jsp"><i class="fa fa-building"></i> <span>巡检计划</span></a></li>
+        <li><a href="/CheckSystem/jsp/emRepair.jsp"><i class="fa fa-building"></i> <span>设备报修</span></a></li>
     </section>
   </aside>
 
